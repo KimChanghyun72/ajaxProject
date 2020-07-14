@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jquery/ajax.html</title>
+    <script src="jquery-3.5.1.min.js"></script>
+    <script>
+        var cnt = 0;
+        $(document).ready(function () {
+            // $('button').click(showResult);
+            $('#btnShow').on('click', showResult);
+            //$('#btnRemove').on('click', removeResult);
+        });   
+        function showResult() {
+            if (cnt == 0) {
+                $.ajax({
+                    url: "MOCK_DATA.json",
+                    success: function (result, status, xhr) { //result => 결과값.
+                        // document.write(result[00].id);
+                        console.log(result); // 데이터
+                        //console.log(status); //통신상태
+                        //console.log(xhr); //통신정보
+                        getData(result);
+                    }
+
+                });
+                cnt++;
+            }
+        }
+        function getData(data) {
+            var $table = $('<table />').attr({ 'border': '1', 'id': 'tbl' });
+            var $tr = $('<tr />');
+            $tr.append($('<th />').text('ID'),
+                $('<th />').text('FName'),
+                $('<th />').text('LName'),
+                $('<th />').text('Gender'),
+                $('<th />').text('Email'),
+                $('<td />').append('<input type="checkbox"')
+            );
+            $table.append($tr);
+
+            data.forEach(function (o) {
+                $tr = $('<tr />');
+                for (f in o) {
+                    $tr.append($('<td />').text(o[f]));
+                }
+                $tr.append($('<td />').append('<input type="checkbox"/>'));
+                $table.append($tr);
+            });
+
+            $('#show').append($table);
+
+        }
+     
+    </script>
+</head>
+
+<body>
+    <h1>Ajax Sample</h1>
+    <button id="btnShow">Show Result</button>
+    <p id="show"></p>
+    <button id="btnAdd">추가</button>
+    <button id="btnRemove">삭제</button>
+</body>
+
+</html>
