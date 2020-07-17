@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="jquery-3.5.1.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$.ajax({
+			url:"emp.xml",
+			success: function(result){
+				
+				var datas = $(result).children().children().children();//attr of record
+				console.log(datas);
+				
+				for(var i=0; i<datas.length; i++){
+					if(i % 5 == 0){
+					document.write("사원번호", " : ", $(datas[i]).text(), "<br>");
+						
+					} else if(i % 5 == 1){
+						document.write("사원이름", " : ", $(datas[i]).text(), "<br>");
+					} else if(i % 5 == 2){
+						document.write("회사이름", " : ", $(datas[i]).text(), "<br>");
+					} else if(i % 5 == 3){
+						document.write("부서이름", " : ", $(datas[i]).text(), "<br>");
+					} else{
+						document.write("직무 정보", " : ", $(datas[i]).text(), "<br><br>");
+					}
+					
+					console.log(datas[i], "... ", $(datas[i]).text());
+					
+				}
+				
+				
+				
+			}
+		});
+	})
+</script>
+</head>
+<body>
+
+</body>
+</html>
