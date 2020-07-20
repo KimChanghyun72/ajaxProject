@@ -19,13 +19,68 @@ public class EmpDAO {
 	
 	try {
 	Class.forName("oracle.jdbc.driver.OracleDriver");
-	conn = DriverManager.getConnection(url,"hr","hr");//주소, id, paswd
+	conn = DriverManager.getConnection(url,"hr","hr");//주소, id, passwd
 	
 	} catch (Exception e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 	return conn;
+	}
+	
+	public List<Employee> getAjaxData(){
+		conn = getConnect();
+		String sql = "select first_name, last_name, email, job_id,"
+				+ " hire_date, salary from employees";
+		List<Employee> list = new ArrayList<>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Employee emp = new Employee();
+				emp.setFirstName(rs.getString("first_name"));
+				emp.setLastName(rs.getString("last_name"));
+				emp.setEmail(rs.getString("email"));
+				emp.setJobId(rs.getString("job_id"));
+				emp.setHireDate(rs.getString("hire_date"));
+				emp.setSalary(rs.getInt("salary"));
+				list.add(emp);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return list;
+	}
+	
+	public void updateEmp(String empId, String salary) {
+		conn = getConnect();
+		String sql = "update employees set salary= ?" 
+				+"where employee_id= ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, salary);
+			pstmt.setString(2, empId);
+			int r = pstmt.executeUpdate(); //쿼리의 실행
+			System.out.println(r + "건 업데이트됨.");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public void deleteEmp(String empId) {

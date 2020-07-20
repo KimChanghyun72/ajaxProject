@@ -27,11 +27,11 @@ public class UpdateEmpServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		String empId = request.getParameter(("eid");
+		String empId = request.getParameter("eid");
 		String salary = request.getParameter("salary");
-		System.out.println(empId+ ", " + salary);
 		
-		Emp
+		EmpDAO dao = new EmpDAO();
+		dao.updateEmp(empId, salary);
 		
 	}
 

@@ -9,6 +9,9 @@ public class Employee {
 	String lastName;
 	String jobId;
 		
+	public Employee() {
+		
+	}
 	public Employee(int employeeId, String firstName, String email, int salary) {
 		super();
 		this.employeeId = employeeId;

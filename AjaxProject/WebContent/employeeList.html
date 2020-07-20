@@ -11,6 +11,7 @@ $(document).ready(function() {
 	$.ajax({
 		url: "GetEmpServlet",
 		dataType: "json",
+		data:{"action": "list"},
 		success: function(result, status, xhr) {
 			console.log(result)
 			var datas = result;
@@ -40,17 +41,20 @@ function valueUpdate(){
 	var curEmpId = $(this).parent().parent().children().eq(0).text();
 	$.ajax({
 		url:"UpdateEmpServlet",
-		data: {"eid":curEmpId, "salary":curSalary},
+		data: {"eid":curEmpId, "salary":curSalary, "action": "update"},
 		success: function(result, status){
 			console.log(status);
 		}
 		
 	});
+	$(this).parent().text(curSalary);
 	
-	
+	//$(this).parent().childNodes[0].nodeValue= $(this).val();
+	//$(this).remove();
 }
 
 function changeFunc(obj){
+	if(obj.childNodes[0].nodeValue != ""){
 	console.log(obj);
 	var curValue = obj.childNodes[0].nodeValue;
 	var $input = $('<input />').attr('value',curValue);
@@ -59,6 +63,7 @@ function changeFunc(obj){
 	//var sal = $(obj).append($('<input />').attr('value',obj.childNodes[0].nodeValue));
 	//console.log(sal);
 	obj.childNodes[0].nodeValue="";
+	
 	//var eid = $(obj).parent().parent().children().eq(0).text();
 	/*$.ajax({
 		url:"UpdEmpServlet",
@@ -68,6 +73,7 @@ function changeFunc(obj){
 		}
 		
 	})*/
+	}
 }
 
 function delFunc(obj){

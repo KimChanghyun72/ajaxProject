@@ -11,8 +11,19 @@
 			success: function(result){
 				
 				var datas = $(result).children().children().children();//attr of record
-				console.log(datas);
-				
+				//console.log(datas);
+				var datas2 = $(result).children().children()
+				console.log(datas2);
+				//교수님 해제
+				for(var i=0; i<datas2.length; i++){
+					document.write($(datas2[i]).children().eq(0).text()+"-"
+							+$(datas2[i]).children().eq(1).text()+"-"
+							+$(datas2[i]).children().eq(2).text()+"-"
+							+$(datas2[i]).children().eq(3).text()+"-"
+							+$(datas2[i]).children().eq(4).text()+"<br>")
+				}
+				document.write("<br>");
+				//제출답안
 				for(var i=0; i<datas.length; i++){
 					if(i % 5 == 0){
 					document.write("사원번호", " : ", $(datas[i]).text(), "<br>");
